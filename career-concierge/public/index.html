@@ -32,7 +32,12 @@
         </div>
       </div>
       <div class="system-badge-container">
-        <span class="badge-label">Engine Status:</span>
+        <label for="engine-mode" class="badge-label">Mode:</label>
+        <select id="engine-mode" class="mode-select">
+          <option value="demo" selected>Demo Simulation (No API Required)</option>
+          <option value="live">Live API Execution</option>
+        </select>
+        <span class="badge-label" style="margin-left: 16px;">Engine Status:</span>
         <span id="engine-status" class="badge-status status-idle">Ready</span>
       </div>
     </header>
@@ -157,6 +162,9 @@
 
           <!-- Tab: Resume Comparison -->
           <div id="tab-comparison" class="tab-content">
+            <div class="comparison-actions" style="display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 8px;">
+              <button id="btn-copy-json" class="btn btn-secondary" style="padding: 6px 12px; font-size: 11px;" onclick="copyDraftJson()">Copy Full Tailored JSON</button>
+            </div>
             <div class="comparison-grid">
               <div class="comp-col">
                 <div class="comp-header">Original Bullets (Staged Input)</div>

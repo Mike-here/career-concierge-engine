@@ -1,6 +1,7 @@
 // State Management
 let currentStatus = "idle";
 let eventSource = null;
+let latestDraft = null;
 
 // DOM Elements
 const resumeEditor = document.getElementById("resume-editor");
@@ -98,6 +99,7 @@ async function loadResults() {
     const res = await fetch("/api/results");
     const data = await res.json();
     
+    latestDraft = data.resume_draft;
     renderRequirements(data.extracted_requirements);
     renderComparison(data.resume_draft, data.resume_master);
     renderScorecard(data.score_card);
@@ -288,7 +290,9 @@ async function runEngine() {
   terminalLog.innerHTML = `<div class="system-line">[System] Staged inputs saved. Launching multi-agent optimization loop...</div>`;
   
   // Establish EventSource
-  eventSource = new EventSource("/api/run");
+  const modeSelect = document.getElementById("engine-mode");
+  const mode = modeSelect ? modeSelect.value : "demo";
+  eventSource = new EventSource(`/api/run?mode=${mode}`);
   
   eventSource.onmessage = (event) => {
     const rawLine = event.data;
@@ -382,3 +386,13 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
+
+window.copyDraftJson = function() {
+  if (!latestDraft) {
+    alert("No tailored resume generated yet!");
+    return;
+  }
+  navigator.clipboard.writeText(JSON.stringify(latestDraft, null, 2))
+    .then(() => alert("Tailored resume JSON copied to clipboard!"))
+    .catch(err => alert("Failed to copy: " + err.message));
+};

@@ -115,6 +115,7 @@ async def get_results(request):
 
 # 4. API: Stream agent run logs
 async def run_concierge_sse(request):
+    mode = request.query_params.get("mode", "demo")
     async def log_streamer():
         python_executable = sys.executable
         script_path = os.path.join(WORKSPACE, "run_concierge.py")
@@ -122,11 +123,14 @@ async def run_concierge_sse(request):
         # Inject current process environment variables
         env = os.environ.copy()
         
+        args = [python_executable, script_path]
+        if mode == "demo":
+            args.append("--demo")
+        
         try:
             # Start run_concierge.py in a subprocess
             process = await asyncio.create_subprocess_exec(
-                python_executable,
-                script_path,
+                *args,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 cwd=WORKSPACE,
