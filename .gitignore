@@ -1,0 +1,21 @@
+# Temporary user staging data
+career-concierge/inputs/resume_master.json
+career-concierge/inputs/job_description.md
+career-concierge/inputs/extracted_requirements.json
+career-concierge/output/resume_draft.json
+
+# Evals folder
+career-concierge/evals/
+
+# Configurations
+.env
+
+# Python tracks
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
