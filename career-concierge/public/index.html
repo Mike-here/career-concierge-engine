@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autopilot Career Concierge | Domain-Agnostic AI Agent Engine</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Custom Vanilla CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Decorative Orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="app-container">
+    
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-logo-container">
+        <span class="logo-icon">🚀</span>
+        <div>
+          <h1 id="app-title">Autopilot Career Concierge</h1>
+          <p id="app-subtitle" class="text-gradient">Universal Multi-Agent Professional Optimization Engine</p>
+        </div>
+      </div>
+      <div class="system-badge-container">
+        <span class="badge-label">Engine Status:</span>
+        <span id="engine-status" class="badge-status status-idle">Ready</span>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="workspace-grid">
+      
+      <!-- Input Panel -->
+      <section class="panel input-panel">
+        <div class="panel-header">
+          <h2>1. Staging Workspace Inputs</h2>
+          <span class="panel-subtitle">Update raw resume details and the target job description</span>
+        </div>
+        
+        <div class="inputs-container">
+          <!-- Resume Editor -->
+          <div class="editor-block">
+            <div class="editor-header">
+              <span class="editor-title">Master Resume (JSON Schema)</span>
+              <span class="file-badge">resume_master.json</span>
+            </div>
+            <textarea id="resume-editor" spellcheck="false" placeholder="Loading master resume..."></textarea>
+          </div>
+          
+          <!-- Job Description Editor -->
+          <div class="editor-block">
+            <div class="editor-header">
+              <span class="editor-title">Target Job Description (Markdown)</span>
+              <span class="file-badge">job_description.md</span>
+            </div>
+            <textarea id="job-editor" spellcheck="false" placeholder="Loading job description..."></textarea>
+          </div>
+        </div>
+
+        <div class="actions-bar">
+          <button id="btn-save" class="btn btn-secondary">Save Staging Inputs</button>
+          <button id="btn-run" class="btn btn-primary">Run Autopilot Concierge</button>
+        </div>
+      </section>
+
+      <!-- Terminal / Logs Output -->
+      <section class="panel terminal-panel">
+        <div class="panel-header">
+          <h2>2. Live Multi-Agent Execution Log</h2>
+          <span class="panel-subtitle">Real-time log stream from Context Hunter, Resume Tailor & ATS Critic</span>
+        </div>
+        <div class="terminal-body">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <span class="terminal-title">concierge@autopilot-engine:~</span>
+          </div>
+          <div id="terminal-log" class="terminal-content">
+            <div class="system-line">[System] Welcome to Autopilot Career Concierge. Staged inputs loaded. Ready to execute.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results Visualization -->
+      <section class="panel results-panel">
+        <div class="panel-header">
+          <h2>3. Execution Outputs & Analysis</h2>
+          <span class="panel-subtitle font-sans">Inspect parsed data matching patterns and optimized drafts</span>
+        </div>
+        
+        <!-- Tabs Navigation -->
+        <nav class="tabs-nav">
+          <button id="tab-btn-requirements" class="tab-btn active" onclick="switchTab('requirements')">Extracted Requirements</button>
+          <button id="tab-btn-comparison" class="tab-btn" onclick="switchTab('comparison')">Resume Comparison</button>
+          <button id="tab-btn-scorecard" class="tab-btn" onclick="switchTab('scorecard')">ATS Critic Audit</button>
+        </nav>
+
+        <!-- Tab Contents -->
+        <div class="tab-viewport">
+          
+          <!-- Tab: Requirements -->
+          <div id="tab-requirements" class="tab-content active">
+            <div class="requirements-wrapper">
+              <div class="req-meta-grid">
+                <div class="meta-card">
+                  <span class="meta-label">Domain Category</span>
+                  <span id="req-domain-val" class="meta-value">—</span>
+                </div>
+                <div class="meta-card">
+                  <span class="meta-label">Target Role</span>
+                  <span id="req-role-val" class="meta-value">—</span>
+                </div>
+              </div>
+              
+              <div class="skills-grid">
+                <div class="skills-card">
+                  <h3>Core Competencies</h3>
+                  <ul id="req-competencies-list">
+                    <li class="empty-list">No data extracted yet.</li>
+                  </ul>
+                </div>
+                <div class="skills-card">
+                  <h3>Required Tools & Tech</h3>
+                  <ul id="req-tools-list">
+                    <li class="empty-list">No data extracted yet.</li>
+                  </ul>
+                </div>
+                <div class="skills-card">
+                  <h3>Soft Skills</h3>
+                  <ul id="req-soft-list">
+                    <li class="empty-list">No data extracted yet.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="keywords-card">
+                <h3>ATS Anchor Keywords (High-Density Targets)</h3>
+                <div id="req-keywords-tags" class="tags-container">
+                  <span class="empty-list">No keywords extracted yet.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab: Resume Comparison -->
+          <div id="tab-comparison" class="tab-content">
+            <div class="comparison-grid">
+              <div class="comp-col">
+                <div class="comp-header">Original Bullets (Staged Input)</div>
+                <div id="comp-original" class="comp-body code-font">
+                  <p class="empty-message">Run the concierge to generate a comparative draft.</p>
+                </div>
+              </div>
+              <div class="comp-col">
+                <div class="comp-header">Tailored & Optimized Bullets (AI Draft)</div>
+                <div id="comp-draft" class="comp-body code-font">
+                  <p class="empty-message">Run the concierge to generate a comparative draft.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab: ATS Critic Audit -->
+          <div id="tab-scorecard" class="tab-content">
+            <div class="scorecard-wrapper">
+              
+              <!-- Dashboard Header -->
+              <div class="score-dash-header">
+                <div class="overall-radial">
+                  <div class="score-circle">
+                    <span id="score-rating" class="score-number">—</span>
+                    <span class="score-max">/10</span>
+                  </div>
+                  <span class="radial-label">Overall Rating</span>
+                </div>
+                
+                <div class="metrics-bars-container">
+                  <div class="bar-item">
+                    <div class="bar-label-row">
+                      <span>ATS Parsing Accuracy</span>
+                      <span id="score-parsing-val">—</span>
+                    </div>
+                    <div class="progress-bar-track">
+                      <div id="score-parsing-fill" class="progress-bar-fill" style="width: 0%"></div>
+                    </div>
+                  </div>
+                  <div class="bar-item">
+                    <div class="bar-label-row">
+                      <span>Target Keyword Density</span>
+                      <span id="score-keywords-val">—</span>
+                    </div>
+                    <div class="progress-bar-track">
+                      <div id="score-keywords-fill" class="progress-bar-fill" style="width: 0%"></div>
+                    </div>
+                  </div>
+                  <div class="bar-item">
+                    <div class="bar-label-row">
+                      <span>Industry Terminology & Authenticity</span>
+                      <span id="score-industry-val">—</span>
+                    </div>
+                    <div class="progress-bar-track">
+                      <div id="score-industry-fill" class="progress-bar-fill" style="width: 0%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Details Grid -->
+              <div class="audit-details-grid">
+                <div class="audit-card card-deficiencies">
+                  <h3>Identified Deficiencies</h3>
+                  <ul id="score-deficiencies-list">
+                    <li class="empty-list">No audit performed yet.</li>
+                  </ul>
+                </div>
+                <div class="audit-card card-actions">
+                  <h3>Recommended Corrective Actions</h3>
+                  <ul id="score-actions-list">
+                    <li class="empty-list">No audit performed yet.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Powered by Google Antigravity & Gemini API • Running in secure local sandbox</p>
+    </footer>
+  </div>
+
+  <!-- Custom JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
