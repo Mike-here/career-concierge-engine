@@ -36,10 +36,13 @@ async def run_context_hunter():
     jd_path = os.path.abspath(os.path.join(inputs_dir, "job_description.md"))
     reqs_path = os.path.abspath(os.path.join(inputs_dir, "extracted_requirements.json"))
     
+    # Read job description on python side
+    jd_content = read_file(jd_path)
+    
     async with Agent(config) as agent:
         response = await agent.chat(
-            f"Analyze the job description at {jd_path} and parse the requirements. "
-            f"Write the resulting JSON structure into the file at {reqs_path}."
+            f"Here is the job description:\n{jd_content}\n\n"
+            f"Analyze it and parse the requirements. Write the resulting JSON structure into the file at {reqs_path}."
         )
         print("Context Hunter output:\n", await response.text())
 
@@ -57,11 +60,15 @@ async def run_resume_tailor():
     reqs_path = os.path.abspath(os.path.join(inputs_dir, "extracted_requirements.json"))
     draft_path = os.path.abspath(os.path.join(output_dir, "resume_draft.json"))
     
+    # Read master resume and extracted requirements on python side
+    resume_content = read_file(resume_path)
+    reqs_content = read_file(reqs_path)
+    
     async with Agent(config) as agent:
         response = await agent.chat(
-            f"Read the master resume at {resume_path} and optimize its linguistic framing "
-            f"against the target profile in {reqs_path}. "
-            f"Save the optimized draft to the file at {draft_path}."
+            f"Here is the master resume data:\n```json\n{resume_content}\n```\n\n"
+            f"Here are the extracted target job requirements:\n```json\n{reqs_content}\n```\n\n"
+            f"Optimize the master resume against the target profile and save the optimized draft to the file at {draft_path}."
         )
         print("Resume Tailor output:\n", await response.text())
 
@@ -79,10 +86,15 @@ async def run_ats_critic():
     reqs_path = os.path.abspath(os.path.join(inputs_dir, "extracted_requirements.json"))
     score_path = os.path.abspath(os.path.join(evals_dir, "score_card.json"))
     
+    # Read draft and requirements on python side
+    draft_content = read_file(draft_path)
+    reqs_content = read_file(reqs_path)
+    
     async with Agent(config) as agent:
         response = await agent.chat(
-            f"Audit the resume draft at {draft_path} against the target requirements at {reqs_path}. "
-            f"Write the scorecard report to the file at {score_path}."
+            f"Here is the optimized draft resume:\n```json\n{draft_content}\n```\n\n"
+            f"Here are the parsed job requirements:\n```json\n{reqs_content}\n```\n\n"
+            f"Audit the resume draft against the target requirements. Write the scorecard report to the file at {score_path}."
         )
         critic_text = await response.text()
         print("ATS Critic output:\n", critic_text)
